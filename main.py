@@ -29,6 +29,7 @@ def run_command(command_input: CommandInput):
 
         # Execute the command
         result = subprocess.run(command, capture_output=True, text=True, check=True)
+        body = result.stdout.strip().replace("https://cloud:3080/", "https://14.225.69.121:3080/")
 
         if("add" in command_input.arguments and email_to[0]):
             send_email.send_email(
