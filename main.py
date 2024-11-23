@@ -35,10 +35,10 @@ def run_command(command_input: CommandInput):
             send_email.send_email(
                 to_email=email_to[0].replace("--email=", ""),
                 subject='Create User Teleport',
-                body=result.stdout.strip()
+                body=body
         )
         # Return the output
-        return {"output": result.stdout.strip()}
+        return {"output": body}
 
     except subprocess.CalledProcessError as e:
         # Handle command execution errors
