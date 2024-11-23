@@ -20,6 +20,9 @@ def run_command(command_input: CommandInput):
         allowed_commands = ["tctl"] #Ex: tctl users add <user_name> --role=<role_name> --logins=<logins> => tctl users add bao --roles=admin --logins=root
         if command_input.base_command not in allowed_commands:
             raise HTTPException(status_code=403, detail="Command not allowed!")
+        
+        email_to = list(filter(lambda x: x.startswith("--email"), command_input.arguments))
+        command_input.arguments.remove(email_to[0])
 
         # Combine the command and its arguments
         command = [command_input.base_command] + command_input.arguments
@@ -27,9 +30,9 @@ def run_command(command_input: CommandInput):
         # Execute the command
         result = subprocess.run(command, capture_output=True, text=True, check=True)
 
-        if("add" in command_input.arguments):
+        if("add" in command_input.arguments and email_to[0]):
             send_email.send_email(
-                to_email='bao.hoang1833004@hcmut.edu.vn',
+                to_email=email_to,
                 subject='Create User Teleport',
                 body=result.stdout.strip()
         )
