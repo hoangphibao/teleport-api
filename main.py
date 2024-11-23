@@ -32,7 +32,7 @@ def run_command(command_input: CommandInput):
 
         if("add" in command_input.arguments and email_to[0]):
             send_email.send_email(
-                to_email=email_to,
+                to_email=email_to[0].replace("--email=", ""),
                 subject='Create User Teleport',
                 body=result.stdout.strip()
         )
