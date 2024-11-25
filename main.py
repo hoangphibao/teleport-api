@@ -22,7 +22,8 @@ def run_command(command_input: CommandInput):
             raise HTTPException(status_code=403, detail="Command not allowed!")
         
         email_to = list(filter(lambda x: x.startswith("--email"), command_input.arguments))
-        command_input.arguments.remove(email_to[0])
+        if(email_to):
+            command_input.arguments.remove(email_to[0])
 
         # Combine the command and its arguments
         command = [command_input.base_command] + command_input.arguments
