@@ -31,9 +31,7 @@ def run_command(command_input: CommandInput):
         # Execute the command
         result = subprocess.run(command, capture_output=True, text=True, check=True)
         body = result.stdout.strip().replace("https://cloud:3080/", "https://14.225.69.121:3080/")
-        print("add" in command_input.arguments or "reset" in command_input.arguments,  email_to[0])
         if(("add" in command_input.arguments or "reset" in command_input.arguments) and email_to[0]):
-            print(12121212)
             send_email.send_email(
                 to_email=email_to[0].replace("--email=", ""),
                 subject='Create User Teleport',
